@@ -1,0 +1,14 @@
+{
+	"name": "renvoate-rule-example",
+	"version": "1.0.0",
+	"description": "This shows how to use Renovate with Package Rules.",
+	"author": {
+		"name": "Nikolas Grottendieck",
+		"email": "git@nikolasgrottendieck.com",
+		"url": "https://nikolasgrottendieck.com"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"renovate": "35.28.0"
+	}
+}
