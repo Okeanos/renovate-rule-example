@@ -1,0 +1,44 @@
+name: Renovate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Allow one concurrent deployment
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  renovate:
+    name: Renovate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.node-version'
+      - name: 'Install Tools'
+        run: |
+          npm update -g npm
+          npm ci
+      - name: Renovate
+        run: npx renovate
+        env:
+          LOG_LEVEL: debug
+          GITHUB_COM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RENOVATE_REPOSITORIES: "Okeanos/renovate-rule-example"
+          RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
+          RENOVATE_EXPOSE_ALL_ENV: true
